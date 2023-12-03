@@ -1,16 +1,13 @@
-# SummaC: Summary Consistency Detection
+# Pruning parameters is pruning hallucination
 
-This repository contains the code for TACL2021 paper: SummaC: Re-Visiting NLI-based Models for Inconsistency Detection in Summarization
 
-We release: (1) the trained SummaC models, (2) the SummaC Benchmark and data loaders, (3) training and evaluation scripts.
+## Get pruned models
+we prune models with Wanda and SparseGPT, which are both available in this [repo](https://github.com/locuslab/wanda). The virtual environment set up in the repo is also compatible with the rest experiments. 
 
-<p align="center">
-  <img width="400" src="https://tingofurro.github.io/images/tacl2021_summac.png">
-</p>
 
-## Installing/Using SummaC
+## Evaluate hallucination
 
-[Update] Thanks to @Aktsvigun for the help, we now have a pip package, making it easy to install the SummaC models:
+Installing/Using SummaC
 ```
 pip install summac
 ```
@@ -45,7 +42,10 @@ print("[Summary 2] SummaCZS Score: %.3f; SummacConv score: %.3f" % (score_zs2["s
 
 We recommend using the SummaCConv models, as experiments from the paper show it provides better predictions. Two notebooks provide experimental details: [SummaC - Main Results.ipynb](https://github.com/tingofurro/summac/blob/master/SummaC%20-%20Main%20Results.ipynb) for the main results (Table 2) and [SummaC - Additional Experiments.ipynb](https://github.com/tingofurro/summac/blob/master/SummaC%20-%20Additional%20Experiments.ipynb) for additional experiments (Tables 1, 3, 4, 5, 6) from the paper.
 
-### SummaC Benchmark
+### Evaluation Datasets
+All data is in the data folder in json format. You do not need to preprocess it. 
+
+SummaC Benchmark
 
 The SummaC Benchmark consists of 6 summary consistency datasets that have been standardized to a binary classification task. The datasets included are:
 
@@ -64,17 +64,13 @@ print(frank_dataset[300]) # {"document: "A Darwin woman has become a TV [...]", 
 
 
 
-## Cite the work
-
-If you make use of the code, models, or algorithm, please cite our paper.
+## Cite us
 ```
-@article{Laban2022SummaCRN,
-  title={SummaC: Re-Visiting NLI-based Models for Inconsistency Detection in Summarization},
-  author={Philippe Laban and Tobias Schnabel and Paul N. Bennett and Marti A. Hearst},
-  journal={Transactions of the Association for Computational Linguistics},
-  year={2022},
-  volume={10},
-  pages={163-177}
+@article{chrysostomou2023lighter,
+  title={Lighter, yet More Faithful: Investigating Hallucinations in Pruned Large Language Models for Abstractive Summarization},
+  author={Chrysostomou, George and Zhao, Zhixue and Williams, Miles and Aletras, Nikolaos},
+  journal={arXiv preprint arXiv:2311.09335},
+  year={2023}
 }
 ```
 
