@@ -1,4 +1,5 @@
-
+saved_attention/*
+images/*
 llm_weights/*
 pruned_model/*
 generated_output/*
