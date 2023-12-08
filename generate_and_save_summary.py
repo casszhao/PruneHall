@@ -13,10 +13,7 @@ from prompt_functions import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, help='Model name or path.')
-parser.add_argument('--data', default="xsumfaith", type=str, help='select a summarization dataset', 
-                    choices=[ #"cogensumm", "frank", 
-                             "polytope", "factcc", "summeval", "xsumfaith",
-                             ])
+parser.add_argument('--data', type=str, help='Name of data file to use.')
 parser.add_argument('--seed', type=int, default=0, help='Seed for sampling the calibration data.')
 parser.add_argument('--prune_method', default="fullmodel", type=str, help='if using pruned model and which to use', 
                     choices=["fullmodel", "wanda", "sparsegpt", "magnitude"])
@@ -114,14 +111,18 @@ for i, key in enumerate(key_list):
         )
         #character_len = len(dataset[key]['document'])
 
-        input_ids = tokenizer.encode(document, return_tensors="pt") 
+        encoding = tokenizer(document, return_tensors="pt")
+        encoding = encoding.to(model.device)
+
+        input_ids = encoding.input_ids
         if input_ids.shape[1] > sequence_length:
             print(f"Skipping {key} ({input_ids.shape[1]} > {sequence_length}).")
             continue
 
         output = model.generate(
-            inputs=input_ids.to(model.device),
-            max_length=sequence_length
+            **encoding,
+            max_length=sequence_length,
+            do_sample=False,
         )
         output_text = tokenizer.decode(output[0][int(input_ids.shape[1]):], skip_special_tokens=True)
         
