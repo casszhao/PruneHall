@@ -12,27 +12,25 @@ import os, argparse, time
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--model', default="Llama-2-13b-chat-hf_0.2", type=str, help='LLaMA model', 
-                        # choices=[
-                        #          "falcon-7b-instruct",
-                        #          "mpt-7b-instruct",
-                        #          ]
-                    )
+parser.add_argument('--model', default="Mistral-7B-Instruct-v0.1", type=str, help='LLaMA model')
+parser.add_argument('--prune_ratio', default=0, type=float, help='LLaMA model')
+
 parser.add_argument('--data', default="summeval", type=str, help='select a summarization dataset', 
                     # choices=[ #"cogensumm", "frank", 
                     #          "polytope", "factcc", "summeval", "xsumfaith", "rct_summaries", "legal_contracts",
                     #          ]
                              )
-parser.add_argument('--prune_method', default="sparsegpt", type=str, help='if using pruned model and which to use', 
+parser.add_argument('--prune_method', default="fullmodel", type=str, help='if using pruned model and which to use', 
                     choices=["fullmodel", "wanda", "sparsegpt", "magnitude"])
 parser.add_argument('--prompt_id', default="A", type=str, 
                     choices=["A", "B", "C"],
                     help='pick a prompt template from prompt list, A or B or None')
 
-parser.add_argument('--test_num', default=2222, type=int)
+parser.add_argument('--test_num', default=2, type=int)
 #parser.add_argument('--cache_model_dir', default="pruned_model", type=str)
 args = parser.parse_args()
 
+if args.prune_ratio == 0: assert args.prune_method == "fullmodel"
 
 def get_sequence_length(config: PretrainedConfig, default: int = 2048) -> int:
     if hasattr(config, "sliding_window"):
@@ -74,21 +72,31 @@ def get_attention_to_source_list(model, tokenizer, input_ids):
 
 
 
-def get_full_data_attention(model_name, test_num, prompt_id):
-    if '_0' in str(model_name): pass
-    else: 
-        if 'Llama' in str(model_name):
-            model_name = 'meta-llama/'+ model_name
-        else: pass
-
-    model = AutoModelForCausalLM.from_pretrained(model_name, 
+def get_full_data_attention(model_name, test_num, prompt_id, prune_method):
+    if prune_method == "fullmodel":  
+        # if "Mistral" in model_name: model_name = "mistralai/"+model_name
+        model = AutoModelForCausalLM.from_pretrained(model_name, 
                                                     cache_dir="llm_weights", 
-                                                    trust_remote_code=True, device_map="auto",
+                                                    trust_remote_code=True, 
+                                                    device_map="auto",
+                                                    torch_dtype="auto" if torch.cuda.is_available() else None,
+                                                    use_auth_token=True,
+                                                    ) # torch_dtype=torch.float16, low_cpu_mem_usage=True, 
+        tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir="pruned_model", use_fast=False, trust_remote_code=True)
+    
+
+    else: 
+        model = AutoModelForCausalLM.from_pretrained(f'pruned_model/{model_name}_{prune_ratio}/{prune_method}',
+                                                    # cache_dir="pruned_model", 
+                                                    trust_remote_code=True, 
+                                                    device_map="auto",
                                                     torch_dtype="auto" if torch.cuda.is_available() else None,
                                                     ) # torch_dtype=torch.float16, low_cpu_mem_usage=True, 
+        tokenizer = AutoTokenizer.from_pretrained(f'pruned_model/{model_name}_{prune_ratio}/{prune_method}',
+                                                    # cache_dir="pruned_model",  
+                                                    use_fast=False, trust_remote_code=True)
     model.eval()
     
-    tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir="pruned_model", use_fast=False, trust_remote_code=True)
 
     list_of_list = []
     
@@ -105,7 +113,6 @@ def get_full_data_attention(model_name, test_num, prompt_id):
             
             input_ids = tokenizer.encode(text, return_tensors="pt").to(model.device)
     
-            #new_tokens_len=int(input_len*0.25)
 
             sequence_length = get_sequence_length(model.config)
             if input_ids.shape[1] > sequence_length:
@@ -125,10 +132,10 @@ model_family = str(args.model).split("-")[0]  # Llama -2-13b-chat-hf_0.4   falco
 
 
 if "llama" in str(args.model).lower():
-    size = str(args.model).split("-")[-3]
+    size = str(args.model).split("-")[2]
     print(' it is a llama size of ', size)
 else:
-    size = str(args.model).split("-")[-2]   # falcon-7b-instruct_0.4
+    size = str(args.model).split("-")[1]   # falcon-7b-instruct_0.4
 
 model_shortname = f"{model_family}-{size}"  # falcon-7b
 print(' model_shortname: ', model_shortname)
@@ -149,8 +156,11 @@ if os.path.exists(pkl_file_dir + f'{model_shortname}_full.pkl'):
     noprune_model_attention = pickle.load(open_file)
     open_file.close()
 else:
-    noprune_model_attention = get_full_data_attention(str(args.model).split("_")[0],
-                                                        args.test_num, args.prompt_id)
+    noprune_model_attention = get_full_data_attention(model_name= args.model,
+                                                      test_num=args.test_num, 
+                                                      prompt_id=args.prompt_id, 
+                                                      prune_method=args.prune_method
+                                                      )
     open_file = open(pkl_file_dir + f'{model_shortname}_full.pkl', 'wb')
     pickle.dump(noprune_model_attention,open_file)
     open_file.close()

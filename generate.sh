@@ -1,37 +1,43 @@
 #!/bin/bash
 
-#SBATCH --nodes=1
-#SBATCH --partition=gpu
-#SBATCH --qos=gpu
-#SBATCH --gres=gpu:2
-#SBATCH --mem=182G
-#SBATCH --time=4-00:00:00
+set -e
 
+MODELS=(
+  "tiiuae/falcon-7b-instruct"
+  "mistralai/Mistral-7B-Instruct-v0.1"
+  "meta-llama/Llama-2-7b-chat-hf"
+  "meta-llama/Llama-2-13b-chat-hf"
+  # "meta-llama/Llama-2-70b-chat-hf"
+  "facebook/opt-iml-1.3b"
+  # "facebook/opt-iml-30b"
+)
 
-#SBATCH --job-name=xsum_A
+DATASETS=(
+  "polytope"
+  "factcc"
+  "summeval"
+)
 
-module load Anaconda3/2022.10
-module load CUDA/11.8.0
-source activate seq
+METHODS=(
+  "fullmodel"
+  "magnitude"
+  "wanda"
+  "sparsegpt"
+)
 
+PROMPT_IDS=(
+  "A"
+  "B"
+  "C"
+)
 
-# for prune_method in "sparsegpt" "wanda" "fullmodel" "magnitude"
-# do
-for prompt_id in "A" "B" "C"
-do
-python generate_and_save_summary.py --prune_method "fullmodel" --data "summeval" --prompt_id $prompt_id \
-                                     --model "tiiuae/falcon-7b-instruct" 
+for MODEL in "${MODELS[@]}"; do
+  for DATA in "${DATASETS[@]}"; do
+    for METHOD in "${METHODS[@]}"; do
+      for PROMPT_ID in "${PROMPT_IDS[@]}"; do
+        JOB_ID=$(sbatch --parsable --export=MODEL=$MODEL,DATA=$DATA,METHOD=$METHOD,PROMPT_ID=$PROMPT_ID generate_single.sh)
+        echo $JOB_ID $MODEL $DATA $METHOD $PROMPT_ID
+      done
+    done
+  done
 done
-# done
-
-
-
-# for method in "wanda" "fullmodel" "sparsegpt"
-# do
-# for model in "decapoda-research/llama-7b-hf" "decapoda-research/llama-13b-hf" "decapoda-research/llama-30b-hf", 
-# do
-# python generate_summary_fast.py --prune_method $method --data polytope \
-#                                 --model $model 
-
-# done
-# done
