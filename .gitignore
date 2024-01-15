@@ -8,3 +8,5 @@ summac/__pycache__/*
 slurm-*
 
 .env*
+
+rct_process/
