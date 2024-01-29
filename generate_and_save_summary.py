@@ -103,7 +103,8 @@ for i, key in enumerate(key_list):
         print(key)
     else: 
         print(f"generating for {key} ...")
-        document = generate_prompt(
+        document = dataset[key]["document"]
+        prompt = generate_prompt(
             task="summarization",
             model=short_model_type,
             prompt_id=args.prompt_id,
@@ -111,7 +112,7 @@ for i, key in enumerate(key_list):
         )
         #character_len = len(dataset[key]['document'])
 
-        encoding = tokenizer(document, return_tensors="pt")
+        encoding = tokenizer(prompt, return_tensors="pt")
         encoding = encoding.to(model.device)
 
         input_ids = encoding.input_ids
@@ -126,10 +127,17 @@ for i, key in enumerate(key_list):
         )
         output_text = tokenizer.decode(output[0][int(input_ids.shape[1]):], skip_special_tokens=True)
         
+        reference = (
+            dataset[key].get("reference_summary")
+            or dataset[key].get("claim")
+            or dataset[key].get("target")
+        )
+        if reference is None:
+            raise ValueError(f"Could not find a reference for {key}.")
 
         score_harim = harim.compute(predictions=[output_text], references=[document])
-        score_rouge = rouge.compute(predictions=[output_text], references=[document]) #, avg=True
-        score_bertscore = bertscore.compute(predictions=[output_text], references=[document], lang="en")
+        score_rouge = rouge.compute(predictions=[output_text], references=[reference])
+        score_bertscore = bertscore.compute(predictions=[output_text], references=[reference], lang="en")
         score_zs = model_zs.score([document], [output_text])
         score_conv = model_conv.score([document], [output_text])
 
