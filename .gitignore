@@ -5,7 +5,7 @@ __pycache__
 
 # data for scripts
 data/temp_data
-data/*.json
+*.json
 
 # experiment leftovers
 generated_output/
