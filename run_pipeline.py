@@ -1,12 +1,17 @@
 from typing import List
+import argparse
 import torch
+import json
 import numpy as np
 from loguru import logger
-import json, argparse
-
 from tqdm import tqdm
-from pruning_study.datamodels import Dataset, FinalResult, HallucinationResult, SummaryResult
-from pruning_study.prompts import generate_prompt
+
+from pruning_study.datamodels import (
+    Dataset,
+    FinalResult,
+    HallucinationResult,
+    SummaryResult
+)
 from pruning_study.utils import (
     get_model_and_tokenzier,
     get_sequence_length,
@@ -32,6 +37,11 @@ if __name__ == '__main__':
         '--model-name',
         type=str,
         help='Model name'
+    )
+    parser.add_argument(
+        '--data-path',
+        type=str,
+        help='Directory where data is stored.'
     )
     parser.add_argument(
         '--dataset',
@@ -112,7 +122,8 @@ if __name__ == '__main__':
 
     logger.debug("Evaluation scripts loaded - starting..")
 
-    with open(f"data/{args.dataset}.json", 'r', encoding='utf8') as f:
+    # load data
+    with open(f"{args.data_path}/{args.dataset}.json", 'r', encoding='utf8') as f:
         data_untreated = json.load(f)
 
     dataset: Dataset = harmonize_data_format_and_add_prompts(
@@ -133,8 +144,6 @@ if __name__ == '__main__':
 
             # padding side is always left for batch generation decoder-only
             tokenizer.padding_side = "left"
-
-            tokenizer.pad_token = tokenizer.eos_token # JUST FOR QUICK LOCAL TESTS WITH GPT2
 
             # get model inputs
             model_inputs = tokenizer(
@@ -207,7 +216,7 @@ if __name__ == '__main__':
 
                 # save them intermedietary just for inspection and debugging
                 # + in case of any cuda mem failure
-                if args.save_in_the_middle:
+                if args.save_inbetween:
                     save_results(
                         results=full_results,
                         results_path=result_path,
