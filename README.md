@@ -35,7 +35,7 @@ poetry install
 
 ## Evaluation
 
-Our `run_pipeline.py` script does three main things:
+Our `run_evaluation.py` script does three main things:
 1. Generates in `eval` and without `sampling` a summary for a document based on a prompt.
 2. Evaluates the summary based on `Rouge metrics` and `BertScore` against the target summary.
 3. Evaluates for hallucinations the summary based on `SummaC` and `Harim+` against the source document.
@@ -45,7 +45,7 @@ For our work we also produce `rouge metrics` of the summary against the source d
 You can run our scripts by executing the following script:
 
 ```bash
-python run_pipeline.py  --model-path _PATH_WHERE_YOUR_MODELS_ARE_STORED \
+python run_evaluation.py  --model-path _PATH_WHERE_YOUR_MODELS_ARE_STORED \
                         --model-name _MODEL_NAME_AS_IT_APPEARS_IN_YOUR_DIR_ \
                         --data-path _PATH_WHERE_YOUR_DATA_IS_STORED_ \
                         --dataset _DATASET_NAME_ \
@@ -59,7 +59,7 @@ python run_pipeline.py  --model-path _PATH_WHERE_YOUR_MODELS_ARE_STORED \
 Example:
 
 ```bash
-python run_pipeline.py  --model-path models \
+python run_evaluation.py  --model-path models \
                         --model-name llama-2-7b-chat-wanda # note under here your tokenizer and model are both saved \
                         --data-path data/ \
                         --dataset 'summeval' \
