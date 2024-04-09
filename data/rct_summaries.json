@@ -79,6 +79,14 @@
         "dataset": "rct_summaries",
         "target": "The data are too few to support the use of hydration as a specific treatment for women presenting with preterm labour. The two small studies available do not show any advantage of hydration compared to bed rest alone. Intravenous hydration does not seem to be beneficial, even during the period of evaluation soon after admission, in women with preterm labour. Women with evidence of dehydration may, however, benefit from the intervention."
     },
+    "CD005251": {
+        "review_id": "CD005251",
+        "pmid": 3832185,
+        "title": "[Prophylactic use of antibiotics in umbilical catheterization in newborn infants].",
+        "document": NaN,
+        "dataset": "rct_summaries",
+        "target": "There is insufficient evidence from randomised trials to support or refute the use of prophylactic antibiotics when UVCs are inserted in newborn infants. There is no evidence to support or refute continuing antibiotics once initial cultures rule out infection in newborn infants with UVCs."
+    },
     "CD006746": {
         "review_id": "CD006746",
         "pmid": 20472226,
@@ -111,14 +119,6 @@
         "dataset": "rct_summaries",
         "target": "On the basis of this one trial and subsequent analysis of data as reported by the authors, indomethacin cannot be recommended for the treatment of mild to moderate severity Alzheimer's disease. At doses of 100-150 mg daily, serious side effects will limit its use."
     },
-    "CD004495": {
-        "review_id": "CD004495",
-        "pmid": 6352643,
-        "title": "Ceftazidime or gentamicin plus benzylpenicillin in neonates less than forty-eight hours old.",
-        "document": "A clinical trial was conducted to assess the value of ceftazidime as a first-line antibiotic in a neonatal intensive care unit. Fifty-five infants less than 48 h old with suspected sepsis were randomly treated with ceftazidime or penicillin and gentamicin. A full septic screen was performed in all infants before treatment. Treatment was stopped after 48 h if cultures were sterile. A further 22 infants more than 48 h old, with clinical evidence of sepsis, were treated with ceftazidime in an open trial. Ceftazidime proved effective against all but two of the septicaemias. A group D beta-haemolytic streptococcus and a coagulase-negative staphylococcus proved resistant, but were also resistant to penicillin and gentamicin. No adverse response to ceftazidime was noted, and the incidence of later candidiasis was similar to that after other broad-spectrum antibiotic combinations. The avoidance of gentamicin assay in the ceftazidime group was an advantage in this age group.",
-        "dataset": "rct_summaries",
-        "target": "There is no evidence from randomised trials to suggest that any antibiotic regimen may be better than any other in the treatment of presumed early neonatal sepsis. More studies are needed to resolve this issue."
-    },
     "CD001073": {
         "review_id": "CD001073",
         "pmid": 3524608,
@@ -134,6 +134,14 @@
         "document": "The effect of daily intravenous administration of 1000 mg ascorbic acid (AA) in tetanus patients aged 1-30 years was studied. In the age group of 1-12 years, 31 patients were treated with AA as additional to antitetanus serum, sedatives and antibiotics. It was found that none of the patients died who received AA along with the conventional antitetanus therapy. On the other hand, 74.2 per cent of the tetanus patients who received the conventional antitetanus therapy without AA (control group) were succumbed to the infection. In the other age group of 13-30 years, there were 27 and 38 patients in the treatment and control groups respectively. The mortality in the AA and control groups were 37 percent and 67.8 percent respectively. These results suggest that AA might play an important role in reducing the mortality of tetanus. This was supported by the fact that AA was found to mitigate the toxic effects of strychnine producing tetanus like condition in young chicks in the present study.",
         "dataset": "rct_summaries",
         "target": "A single, non-randomised, poorly reported trial of vitamin C as a treatment for tetanus suggests a considerable reduction in mortality. However, concerns about trial quality mean that this result must be interpreted with caution and that vitamin C cannot be recommended as a treatment for tetanus on the basis of this evidence. New trials should be carried out to examine the effect of vitamin C on tetanus treatment."
+    },
+    "CD005081": {
+        "review_id": "CD005081",
+        "pmid": 14159267,
+        "title": "CORTICOTROPIN IN TREATMENT OF OCULAR MYASTHENIA; A CONTROLLED CLINICAL TRIAL.",
+        "document": NaN,
+        "dataset": "rct_summaries",
+        "target": "The available randomized controlled literature does not permit any meaningful conclusions about the efficacy of any form of treatment for ocular myasthenia. Data from several reasonably good quality observational studies suggest that corticosteroids and azathioprine may be beneficial in reducing the risk of progression to generalized myasthenia gravis."
     },
     "CD008871": {
         "review_id": "CD008871",
@@ -214,14 +222,6 @@
         "document": "Therapy targeted at tumour necrosis factor-alpha has an established role in Crohn's disease. Lenalidomide, an analogue of thalidomide, is an oral immunomodulatory agent with powerful antitumour necrosis factor-alpha properties. It is licensed for myeloma and myelodysplastic syndrome. Based upon reports of thalidomide efficacy, lenalidomide was evaluated in Crohn's disease.\n                To evaluate the efficacy and safety of lenalidomide in subjects with moderately severe active Crohn's disease.\n                In a multicentre, double-blind, placebo-controlled parallel group study 89 subjects were randomized to lenalidomide 25 mg daily, 5 mg daily or placebo. Subjects were treated for 12 weeks. The primary end point was a 70-point reduction in Crohn's Disease Activity Index.\n                The overall clinical response rate was not significantly different between the three groups: lenalidomide 25 mg 26%, lenalidomide 5 mg 48% and placebo 39%. Lenalidomide was generally well tolerated with only one serious adverse event, a deep vein thrombosis, being attributed to treatment.\n                Lenalidomide, an oral agent with antitumour necrosis factor-alpha properties, was not effective in active Crohn's disease in contrast to reports of benefit from thalidomide. The reasons for this lack of efficacy are speculative, other physiological activities may offset its action on inflammatory cytokines, or its antitumour necrosis factor-alpha action without apoptosis may be insufficient for activity in Crohn's disease.",
         "dataset": "rct_summaries",
         "target": "The results of one well designed study using lenalidomide did not show any statistically significant benefit over placebo. The use of thalidomide or lenalidomide for induction of remission in Crohn's disease is not recommended until data from a definitive study are available."
-    },
-    "CD003863": {
-        "review_id": "CD003863",
-        "pmid": 10945421,
-        "title": "A randomized controlled trial of strapping to prevent post-stroke shoulder pain.",
-        "document": "To determine whether strapping the shoulder in hemiplegic stroke patients: (1) prevents the development, or reduces the severity, of shoulder pain, (2) preserves range of movement in the shoulder, and (3) improves the functional outcomes for the arm and patient overall.\n                A prospective, randomized, single-blind controlled trial of shoulder strapping versus no strapping.\n                Care of the elderly wards in a teaching hospital, Christchurch, New Zealand.\n                All patients admitted with an acute hemiplegic stroke, who had persisting weakness of shoulder abduction.\n                The treatment group had their affected shoulder strapped for six weeks from randomization in addition to standard physiotherapy.\n                All subjects were assessed at entry (week 0), at end of the treatment phase (week 6) and two months later (week 14). A visual analogue scale (VAS) was used to assess shoulder pain severity whereas shoulder range of movement to the point of pain (SROMP) assessed passive range of movement and pain. Functional Independence Measure (FIM), Motor Assessment Scale (MAS) and Rankin Disability Index measured functional outcomes.\n                Ninety-eight subjects participated (49 strapped, 49 controls). Intention to treat analysis showed no significant difference in pain, range of movement or functional outcomes after the intervention phase or at the final assessment. However there were trends for less pain at six weeks (VAS, p = 0.11) and better final upper limb function (MAS, p = 0.16) in strapped patients. Skin reactions were uncommon (6.1%). The presence of neglect or sensory loss, but not subluxation, at baseline was independently associated with poor outcome. Range of movement was lost early (mean difference SROMP between hemiplegic and contralateral shoulders at baseline = 15.2 degrees (95% CI 10.9-19.5)) and continued throughout the study. Shoulder strapping did not alter the rate at which range of movement was lost.\n                No significant benefit with shoulder strapping was demonstrated and reasons for this are discussed. Range of movement in the hemiplegic shoulder is lost very early and any preventive treatments need to begin within the first 1-2 days after a stroke.",
-        "dataset": "rct_summaries",
-        "target": "There is insufficient evidence to conclude whether slings and wheelchair attachments prevent subluxation, decrease pain, increase function or adversely increase contracture in the shoulder after stroke. There is some evidence that strapping the shoulder delays the onset of pain but does not decrease it, nor does it increase function or adversely increase contracture."
     },
     "CD007708": {
         "review_id": "CD007708",
@@ -366,14 +366,6 @@
         "document": "Low bone mineral density (BMD) is prevalent in adults with cystic fibrosis and might be related to calcium and vitamin D malabsorption from the gastrointestinal tract. The aim of this study was to investigate the effect of calcium and vitamin D supplementation on BMD and bone metabolism in these subjects.\n                Patients were invited to participate if they had a BMD Z score of -1 or less in the lumbar spine, proximal femur or distal forearm. Patients were randomised to receive calcium 1 g+vitamin D 800 IU or placebo daily, in addition to their regular vitamin D supplements (900 IU/day). BMD and bone biochemical markers were measured before and after 1 year of treatment.\n                After 12 months, the treatment group (n=15) showed a reduced rate of bone loss compared with the control group (n=15) in the lumbar spine (mean difference 1.9% [CI -0.9% to 4.6%]), total hip (mean difference 0.7% [CI -2.2% to 3.5%]) and distal forearm (mean difference 1.7% [CI -2.2% to 5.5%]), but these changes did not reach statistical significance. There was also a trend towards a reduction in bone turnover in the treatment group.\n                Calcium and vitamin D supplementation reduced the rate of bone turnover and bone loss in adult patients with cystic fibrosis, but these changes did not reach statistical significance. These data suggest that a longer term trial of this simple intervention would be justified.",
         "dataset": "rct_summaries",
         "target": "There is no evidence of benefit or harm in the limited number of small-sized published trials. Adherence to relevant CF guidelines on vitamin D should be considered until further evidence is available."
-    },
-    "CD006943": {
-        "review_id": "CD006943",
-        "pmid": 46511,
-        "title": "Controlled trial of therapy in covert bacteriuria of childhood.",
-        "document": "Sixty-three girls with covert bacteriuria were included in a controlled trial of therapy. Recurrent infection in the treated group was common and was not significantly different from the rate of persistent infection in the untreated control group. Two children in each group developed clinical pyelonephritis; the others have remained healthy and all of them have a normal rate of growth. 2 years after diagnosis three of the thirty-four children in the control group and one of twenty-six children in the treated group have radiological evidence of new scars of pyelonephritis. These changes were relatively minor and in both groups of children renal growth was similar to that in normal children. It is suggested that for most of these children therapy is not essential, and that when renal changes occur they are of little or no significance. Prescriptive screening for cobert bacteriuria of childhood cannot be recommended at present.",
-        "dataset": "rct_summaries",
-        "target": "The included studies do not provide sufficient detail about the harms and benefits of treating covert bacteriuria to enable formation of reliable conclusions. It appears that antibiotic treatment for covert bacteriuria is unlikely to benefit children in the long term."
     },
     "CD005214": {
         "review_id": "CD005214",

@@ -3,5 +3,10 @@ test_model/*/
 __pycache__
 .DS_Store
 
+# data for scripts
+data/temp_data
+data/*.json
+
 # experiment leftovers
 generated_output/
+*.bin
