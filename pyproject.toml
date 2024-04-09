@@ -1,0 +1,53 @@
+[tool.poetry]
+name = "pruning-study"
+version = "0.1.0"
+description = ""
+authors = ["Gchrysostomou <george1bodom@gmail.com>"]
+readme = "README.md"
+packages = [{include = "pruning_study"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10, <3.13"
+loguru = "^0.7.2"
+torch = "^2.2.2"
+nltk = "^3.8.1"
+sentencepiece = "^0.2.0"
+protobuf = "^5.26.1"
+transformers = "^4.39.3"
+evaluate = "^0.4.1"
+datasets = "^2.18.0"
+huggingface-hub = "^0.22.2"
+accelerate = "^0.29.1"
+bert-score = "^0.3.13"
+absl-py = "^2.1.0"
+rouge-score = "^0.1.2"
+pydantic = "^2.6.4"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.1.5"
+pytest = "^7.4.3"
+black = "^23.11.0"
+mypy = "^1.7.0"
+pre-commit = "^3.7.0"
+
+
+[[tool.poetry.source]]
+name = 'pypi'
+priority="primary"
+
+[[tool.poetry.source]]
+name = "fpho"
+url = "https://files.pythonhosted.org"
+priority="supplemental"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+extend-select = ["C4", "NPY", "PD", "SIM", "TCH"]
+ignore = ["E501", "PD901", "TCH002", "PD011", "TCH001"]
+show-fixes = true
+
+# change the default line length number or characters.
+line-length = 150
