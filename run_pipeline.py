@@ -1,7 +1,7 @@
 from typing import List
 import argparse
-import torch
 import json
+import torch
 import numpy as np
 from loguru import logger
 from tqdm import tqdm
@@ -23,7 +23,7 @@ from pruning_study.utils import (
 
 from pruning_study.eval_funcs import ExperimentEvaluator
 
-DEVICE = 'cpu'
+DEVICE = 'cuda' # can also be 'cpu' or 'mps'
 
 if __name__ == '__main__':
 
@@ -167,7 +167,10 @@ if __name__ == '__main__':
             # needed to remove the prompts
             # **IMPORTANT STEP**
             # since we padded all inputs are the same length
-            output_to_decode = output[:,model_inputs['input_ids'].size(1):].cpu()
+            output_to_decode = output[
+                :,
+                model_inputs['input_ids'].size(1):
+            ].cpu()
             # decode the outputs
             predictions = tokenizer.batch_decode(
                 output_to_decode,
@@ -223,8 +226,6 @@ if __name__ == '__main__':
                         prompt_id=args.prompt_id
                     )
 
-            if indx == 1:
-                break
     # save final results
     save_results(
         results=full_results,

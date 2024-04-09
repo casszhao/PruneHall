@@ -1,6 +1,7 @@
 previous/
 test_model/*/
 __pycache__
+.DS_Store
 
 # experiment leftovers
 generated_output/

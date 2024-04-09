@@ -14,7 +14,7 @@ Pruning is done separately in the suggested environment by the previous repo and
 
 ## Setting up
 
-You need to have poetry installed. If not you should be able to install poetry using:
+You need to have poetry installed. If not you should be able to install poetry using `pipx`:
 
 ```bash
 pipx install poetry
@@ -26,9 +26,11 @@ Following this you can follow these steps to set-up your environment:
 
 ```bash
 poetry shell
-poetry install
 # install summac separately due to dependency clashes
+# also install it first
 pip install summac
+# then install the rest of the dependencies
+poetry install
 ```
 
 ## Evaluation
