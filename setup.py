@@ -25,6 +25,8 @@ setup(
         "absl-py>=2.1.0,<3.0.0",
         "rouge-score>=0.1.2,<1.0.0",
         "pydantic>=2.6.4,<3.0.0",
+        "scikit-learn>=1.4.2,<1.5",
+        "openpyxl>=3.1"
     ],
     extras_require={
         "dev": [
