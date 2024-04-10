@@ -33,16 +33,29 @@ pip install summac
 poetry install
 ```
 
+**NOTE**: Supported python versions are `>=3.10, <3.13`
+
 ## Setting up (setup.py)
-and therefore you can create an environment with conda or venv such that:
 
 ```bash
 python3 -m venv ._venv_name_
-pip3 install --upgrade pip
+pip install --upgrade pip
 # again install it first
-pip3 install summac
+pip install summac
 # then the rest
-pip3 install . --extra-index-url https://files.pythonhosted.org
+pip install . --extra-index-url https://files.pythonhosted.org
+```
+
+## Setting up (conda)
+and therefore you can create an environment with conda or venv such that:
+
+```bash
+conda create --name _venv_name_ python=3.10 # or 3.11 or 3.12
+conda activate _venv_name_
+# again install it first
+pip install summac
+# then the rest
+pip install . --extra-index-url https://files.pythonhosted.org
 ```
 
 ## Evaluation
