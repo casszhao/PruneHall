@@ -23,8 +23,6 @@ from pruning_study.utils import (
 
 from pruning_study.eval_funcs import ExperimentEvaluator
 
-DEVICE = 'cuda' # can also be 'cpu' or 'mps'
-
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
@@ -68,6 +66,13 @@ if __name__ == '__main__':
         choices=["fullmodel", "wanda", "sparsegpt", "magnitude"]
     )
     parser.add_argument(
+        '--device',
+        default="cpu",
+        type=str,
+        help='which device to use',
+        choices=["cuda", "mps", "cpu"]
+    )
+    parser.add_argument(
         '--save-inbetween',
         default=True,
         type=bool,
@@ -81,6 +86,8 @@ if __name__ == '__main__':
         help='pick a prompt template from prompt list, A, B, C'
     )
     args = parser.parse_args()
+
+    DEVICE = args.device
 
     np.random.seed(args.seed)
     torch.random.manual_seed(args.seed)

@@ -10,3 +10,4 @@ data/temp_data
 # experiment leftovers
 generated_output/
 *.bin
+.venv*

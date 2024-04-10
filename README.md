@@ -12,7 +12,7 @@ Surprisingly, we find that hallucinations from pruned LLMs are less prevalent th
 We prune models using Magnitude, Wanda and SparseGPT, using the default code available as is found in the [Wanda repo](https://github.com/locuslab/wanda).
 Pruning is done separately in the suggested environment by the previous repo and as such the suggested dependencies with our repo do not necessarily agree.
 
-## Setting up
+## Setting up (with Poetry)
 
 You need to have poetry installed. If not you should be able to install poetry using `pipx`:
 
@@ -31,6 +31,18 @@ poetry shell
 pip install summac
 # then install the rest of the dependencies
 poetry install
+```
+
+## Setting up (setup.py)
+and therefore you can create an environment with conda or venv such that:
+
+```bash
+python3 -m venv ._venv_name_
+pip3 install --upgrade pip
+# again install it first
+pip3 install summac
+# then the rest
+pip3 install . --extra-index-url https://files.pythonhosted.org
 ```
 
 ## Evaluation
