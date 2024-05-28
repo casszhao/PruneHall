@@ -1,5 +1,5 @@
 
-# Investigating Hallucinations in Pruned Large Language Models for Abstractive Summarization
+# TACL paper: Investigating Hallucinations in Pruned Large Language Models for Abstractive Summarization
 Implementation of evaluating hallucination of pruned models, as presented in our [paper](https://arxiv.org/pdf/2311.09335.pdf).
 
 Despite the remarkable performance of generative large language models (LLMs) on abstractive summarization, they face two significant challenges: their considerable size and tendency to hallucinate. Hallucinations are concerning because they erode reliability and raise safety issues. Pruning is a technique that reduces model size by removing redundant weights, enabling more efficient sparse inference. Pruned models yield downstream task performance comparable to the original, making them ideal alternatives when operating on a limited budget.
