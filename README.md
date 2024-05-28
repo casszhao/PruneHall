@@ -1,80 +1,99 @@
-# Lighter, yet More Faithful: Investigating Hallucinations in Pruned Large Language Models for Abstractive Summarization
+
+# Investigating Hallucinations in Pruned Large Language Models for Abstractive Summarization
 Implementation of evaluating hallucination of pruned models, as presented in our [paper](https://arxiv.org/pdf/2311.09335.pdf).
 
-## Get pruned models
-we prune models with Wanda and SparseGPT, which are both available in this [repo](https://github.com/locuslab/wanda). The virtual environment set up in the repo is also compatible with the rest of the experiments. 
+Despite the remarkable performance of generative large language models (LLMs) on abstractive summarization, they face two significant challenges: their considerable size and tendency to hallucinate. Hallucinations are concerning because they erode reliability and raise safety issues. Pruning is a technique that reduces model size by removing redundant weights, enabling more efficient sparse inference. Pruned models yield downstream task performance comparable to the original, making them ideal alternatives when operating on a limited budget.
 
-## quick start for hallucination evaluation
-'''
-python generate_and_save_summary.py --model 'model huggingface handle or local path for a pruned model' --data 'summeval' --prune_method 'fullmodel' --prompt_id 'A'
-'''
+However, the effect that pruning has upon hallucinations in abstractive summarization with LLMs has yet to be explored. In this paper, we provide an extensive empirical study across five summarization datasets, two state-of-the-art pruning methods, and five instruction-tuned LLMs.
 
-## Evaluate hallucination
-if you want to evaluate hallucination with Harim and Summac, separately
+Surprisingly, we find that hallucinations from pruned LLMs are less prevalent than the original models. Our analysis suggests that pruned models tend to depend more on the source document for summary generation. This leads to a higher lexical overlap between the generated summary and the source document, which could be a reason for the reduction in hallucination risk.
 
-### evaluate with Harim
-'''
-harim = load("NCSOFT/harim_plus")  #  using model : facebook/bart-large-cnn
-score_harim = harim.compute(predictions=[output_text], references=[document])
-'''
+## Model pruning
+We prune models using Magnitude, Wanda and SparseGPT, using the default code available as is found in the [Wanda repo](https://github.com/locuslab/wanda).
+Pruning is done separately in the suggested environment by the previous repo and as such the suggested dependencies with our repo do not necessarily agree.
 
-### evaluate with Summac
-Installing/Using SummaC
+## Setting up (with Poetry)
+
+You need to have poetry installed. If not you should be able to install poetry using `pipx`:
+
+```bash
+pipx install poetry
 ```
+
+else, please follow [poetry's original documentation](https://python-poetry.org/docs/).
+
+Following this you can follow these steps to set-up your environment:
+
+```bash
+poetry shell
+# install summac separately due to dependency clashes
+# also install it first
 pip install summac
+# then install the rest of the dependencies
+poetry install
 ```
 
-Requirement issues: in v0.0.4, we've reduced package dependencies to facilitate installation. We recommend you install `torch` first and verify it works before installing `summac`.
+**NOTE**: Supported python versions are `>=3.10, <3.13`
 
-The two trained models SummaC-ZS and SummaC-Conv are implemented in `model_summac` ([link](https://github.com/tingofurro/summac/blob/master/model_summac.py)). Once the package is installed, the models can be used like this:
+## Setting up (setup.py)
 
-
-
-### Example use
-
-```python
-from summac.model_summac import SummaCZS, SummaCConv
-from evaluate import load
-
-
-harim = load("NCSOFT/harim_plus")  #  using model : facebook/bart-large-cnn
-
-
-
-model_zs = SummaCZS(granularity="sentence", model_name="vitc", device="cpu") # If you have a GPU: switch to: device="cuda"
-model_conv = SummaCConv(models=["vitc"], bins='percentile', granularity="sentence", nli_labels="e", device="cpu", start_file="default", agg="mean")
-
-document = """Scientists are studying Mars to learn about the Red Planet and find landing sites for future missions.
-One possible site, known as Arcadia Planitia, is covered instrange sinuous features.
-The shapes could be signs that the area is actually made of glaciers, which are large masses of slow-moving ice.
-Arcadia Planitia is in Mars' northern lowlands."""
-
-summary1 = "There are strange shape patterns on Arcadia Planitia. The shapes could indicate the area might be made of glaciers. This makes Arcadia Planitia ideal for future missions."
-score_zs1 = model_zs.score([document], [summary1])
-score_conv1 = model_conv.score([document], [summary1])
-score_harim1 = harim.compute(predictions=[summary1], references=[document])
-print("[Summary 1] Harim Score: %.3f; SummaCZS Score: %.3f; SummacConv score: %.3f" % (score_harim1, score_zs1["scores"][0], score_conv1["scores"][0])) # [Summary 1] SummaCZS Score: 0.582; SummacConv score: 0.536
-
-summary2 = "There are strange shape patterns on Arcadia Planitia. The shapes could indicate the area might be made of glaciers."
-score_zs2 = model_zs.score([document], [summary2])
-score_conv2 = model_conv.score([document], [summary2])
-score_harim2 = harim.compute(predictions=[summary2], references=[document])
-print("[Summary 2] Harim Score: %.3f; SummaCZS Score: %.3f; SummacConv score: %.3f" % (score_harim2, score_zs2["scores"][0], score_conv2["scores"][0])) # [Summary 2] SummaCZS Score: 0.877; SummacConv score: 0.709
+```bash
+python3 -m venv ._venv_name_
+pip install --upgrade pip
+# again install it first
+pip install summac
+# then the rest
+pip install . --extra-index-url https://files.pythonhosted.org
 ```
 
-We recommend using the SummaCConv models, as experiments from the paper show it provides better predictions. Two notebooks provide experimental details: [SummaC - Main Results.ipynb](https://github.com/tingofurro/summac/blob/master/SummaC%20-%20Main%20Results.ipynb) for the main results (Table 2) and [SummaC - Additional Experiments.ipynb](https://github.com/tingofurro/summac/blob/master/SummaC%20-%20Additional%20Experiments.ipynb) for additional experiments (Tables 1, 3, 4, 5, 6) from the paper.
+## Setting up (conda)
+and therefore you can create an environment with conda or venv such that:
 
-### Evaluation Datasets
-All data is in the data folder in JSON format. 3 of them are from SummaC Benchmark. The SummaC Benchmark consists of 6 summary consistency datasets that have been standardized to a binary classification task. The datasets included are:
+```bash
+conda create --name _venv_name_ python=3.10 # or 3.11 or 3.12
+conda activate _venv_name_
+# again install it first
+pip install summac
+# then the rest
+pip install . --extra-index-url https://files.pythonhosted.org
+```
 
-<p align="center">
-  <img width="500" src="https://tingofurro.github.io/images/tacl2021_summac_benchmark.png?1"><br />
-  <b>% Positive</b> is the percentage of positive (consistent) summaries. IAA is the inter-annotator agreement (Fleiss Kappa). <b>Source</b> is the dataset used for the source documents (CNN/DM or XSum). <b># Summarizers</b> is the number of summarizers (extractive and abstractive) included in the dataset. <b># Sublabel</b> is the number of labels in the typology used to label summary errors.
-</p>
+## Evaluation
 
+Our `run_evaluation.py` script does three main things:
+1. Generates in `eval` and without `sampling` a summary for a document based on a prompt.
+2. Evaluates the summary based on `Rouge metrics` and `BertScore` against the target summary.
+3. Evaluates for hallucinations the summary based on `SummaC` and `Harim+` against the source document.
 
+For our work we also produce `rouge metrics` of the summary against the source document for our across sparsity experiments.
 
+You can run our scripts by executing the following script:
 
+```bash
+python run_evaluation.py  --model-path _PATH_WHERE_YOUR_MODELS_ARE_STORED \
+                        --model-name _MODEL_NAME_AS_IT_APPEARS_IN_YOUR_DIR_ \
+                        --data-path _PATH_WHERE_YOUR_DATA_IS_STORED_ \
+                        --dataset _DATASET_NAME_ \
+                        --seed _RANDOM_SEED_FOR_EXPERIMENTS_ \
+                        --batch-size _EVAL_BATCH_SIZE \
+                        --pruning-method _PRUNING_METHOD_SO_WE_CAN_SAVE_RESULTS_ \
+                        --save-inbetween _WHETHER_TO_STORE_INTERMEDIATE_RESULTS_ \
+                        --prompt-id _WHICH_PROMPT_TEMPLATE_TO_USE_
+```
+
+Example:
+
+```bash
+python run_evaluation.py  --model-path models \
+                        --model-name llama-2-7b-chat-wanda # note under here your tokenizer and model are both saved \
+                        --data-path data/ \
+                        --dataset 'summeval' \
+                        --seed 0 \
+                        --batch-size 16 \
+                        --pruning-method 'wanda' \
+                        --save-inbetween true \
+                        --prompt-id 'A'
+```
 
 ## Cite us
 ```
@@ -88,6 +107,6 @@ All data is in the data folder in JSON format. 3 of them are from SummaC Benchma
 
 ## Contributing
 
-If you'd like to contribute or have questions or suggestions, you can contact us at zhixue.zhao@sheffield.ac.uk 
+If you'd like to contribute or have questions or suggestions, you can contact us at zhixue.zhao@sheffield.ac.uk
 
 All discussion and contributions are welcome.

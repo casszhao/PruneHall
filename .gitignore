@@ -1,12 +1,13 @@
-saved_attention/*
-images/*
-llm_weights/*
-pruned_model/*
-generated_output/*
+previous/
+test_model/*/
+__pycache__
+.DS_Store
 
-summac/__pycache__/*
-slurm-*
+# data for scripts
+data/temp_data
+*.json
 
-.env*
-
-rct_process/
+# experiment leftovers
+generated_output/
+*.bin
+.venv*
