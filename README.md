@@ -1,5 +1,8 @@
 
 # TACL paper: Investigating Hallucinations in Pruned Large Language Models for Abstractive Summarization
+
+[[arXiv](https://arxiv.org/abs/2311.09335)] [[ACL Anthology](https://aclanthology.org/2024.tacl-1.64/)] [[MIT Press](https://doi.org/10.1162/tacl_a_00695)]
+
 Implementation of evaluating hallucination of pruned models, as presented in our [paper](https://arxiv.org/pdf/2311.09335.pdf).
 
 Despite the remarkable performance of generative large language models (LLMs) on abstractive summarization, they face two significant challenges: their considerable size and tendency to hallucinate. Hallucinations are concerning because they erode reliability and raise safety issues. Pruning is a technique that reduces model size by removing redundant weights, enabling more efficient sparse inference. Pruned models yield downstream task performance comparable to the original, making them ideal alternatives when operating on a limited budget.
@@ -96,12 +99,18 @@ python run_evaluation.py  --model-path models \
 ```
 
 ## Cite us
-```
-@article{chrysostomou2023lighter,
-  title={Lighter, yet More Faithful: Investigating Hallucinations in Pruned Large Language Models for Abstractive Summarization},
+```bibtex
+@article{chrysostomou-etal-2024-investigating,
+  title={Investigating Hallucinations in Pruned Large Language Models for Abstractive Summarization},
   author={Chrysostomou, George and Zhao, Zhixue and Williams, Miles and Aletras, Nikolaos},
-  journal={arXiv preprint arXiv:2311.09335},
-  year={2023}
+  year={2024},
+  journal={Transactions of the Association for Computational Linguistics},
+  publisher={MIT Press},
+  address={Cambridge, MA},
+  volume={12},
+  pages={1163--1181},
+  doi={10.1162/tacl_a_00695},
+  url={https://aclanthology.org/2024.tacl-1.64/}
 }
 ```
 
